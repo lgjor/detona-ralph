@@ -22,14 +22,16 @@ Este projeto foi desenvolvido como parte do desafio da trilha Front End da DIO. 
 
 ## 📋 Como Executar
 
-1 Clone este repositório
+Execute pelo github pages:
+[https://lgjor.github.io/detona-ralph/](https://lgjor.github.io/detona-ralph/)
+
+Ou clone este repositório
 
 ```github
 git clone https://github.com/seu-usuario/detona-ralph.git
-
 ```
 
-2 Abra o arquivo index.html em seu navegador
+E abra o arquivo index.html em seu navegador
 
 ## 📚 Desafio Proposto
 
