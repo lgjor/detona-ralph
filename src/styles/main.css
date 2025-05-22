@@ -1,0 +1,18 @@
+.panel{
+    margin-top: 1rem;
+    border: 1px solid #ff0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square{
+    height: 150px;
+    width: 150px;
+    border: 1px solid #000000;
+    background-color: #7fffd4;
+}
+
+.enemy{
+    background-color: #ff0000;
+}
