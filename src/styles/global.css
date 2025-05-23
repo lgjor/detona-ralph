@@ -5,10 +5,34 @@
   font-size: 1rem;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url(../images/wall.png);
   background-size: 350px;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 600px) {
+  .container {
+    min-height: 100vh;
+    height: 100vh;
+  }
+  main {
+    font-size: .5rem;
+    flex: 1 0 auto;
+    min-height: 30vh;
+    max-height: 45vh;
+    padding: 0.5rem 0;
+  }
+  header.menu, footer {
+    flex-shrink: 0;
+  }
 }
