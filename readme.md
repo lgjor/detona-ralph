@@ -13,6 +13,15 @@ Este projeto foi desenvolvido como parte do desafio da trilha Front End da DIO. 
 - Contador de pontos
 - Sons de ação para cada evento do jogo
 - Interface responsiva e visual inspirado no universo do Detona Ralph
+- - Painel 3x3 onde o inimigo aparece aleatoriamente
+- Contador de tempo regressivo
+- Contador de pontos
+- Sons de ação para cada evento do jogo
+- Interface responsiva e visual inspirado no universo do Detona Ralph
+- **Botão Start/Restart**: o jogo só inicia após clicar em "Start" e pode ser reiniciado a qualquer momento
+- **Mensagens motivacionais e divertidas**: a cada nível, o gameState exibe uma mensagem diferente, começando fácil e ficando mais competitiva
+- **Exibição do score final**: ao terminar o tempo, o placar final é mostrado no rodapé
+- **Efeitos retrô no botão**: efeito visual de hover e clique no botão Start/Restart
 
 ## 🛠️ Tecnologias Utilizadas
 
