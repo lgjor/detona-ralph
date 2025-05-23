@@ -1,7 +1,7 @@
 // Coloque seu firebaseConfig aqui
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCSuZnFGDJlhMm8jibd4Sg5P1I6JfmWP5Q",
+  apiKey: $APIKEY,
   authDomain: "detona-ralph-db59d.firebaseapp.com",
   databaseURL: "https://detona-ralph-db59d-default-rtdb.firebaseio.com/",
   projectId: "detona-ralph-db59d",
