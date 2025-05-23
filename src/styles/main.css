@@ -1,20 +1,38 @@
 main {
-    min-height: 100vh;
+    min-height: 60vh;
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
+    align-items: center;
     justify-content: flex-start;
+    overflow: auto;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+#level-label {
+    background: linear-gradient(180deg, #ffd700 0%, #bfa100 100%);
+    color: #000000;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #ffec99;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    border: 2px solid #ffcc00;
+    text-shadow: 1px 1px 0 #fffbe6, 2px 2px 0 #bfa100;
 }
 
 .panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(../images/wall.png);
-    background-size: cover;
-    height: 450px;
-    width: 450px;
+    height: 60vw;
+    max-height: 450px;
+    width: 60vw;
+    max-width: 450px;
+    min-width: 250px;
+    min-height: 250px;
 }
 
 .panel-row {
@@ -23,8 +41,12 @@ main {
 }
 
 .square {
-    width: 150px;
-    height: 150px;
+    width: 18vw;
+    height: 18vw;
+    max-width: 150px;
+    max-height: 150px;
+    min-width: 60px;
+    min-height: 60px;
     background-color: rgb(55, 179, 121);
     border: 2px solid black;
 }
