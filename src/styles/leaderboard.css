@@ -1,0 +1,74 @@
+#leaderboard-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  display: none; /* será display: flex quando visível */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.leaderboard-content {
+  background: #222;
+  color: #ffe066;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  min-width: 320px;
+  max-width: 95vw;
+  box-shadow: 0 0 24px #000;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0 1rem 0;
+  color: #ffe066;
+  font-size: 1.1rem;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+  padding: 0.4rem 1rem;
+  text-align: left;
+  border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-table th {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #ffe066;
+  background: transparent;
+}
+
+.leaderboard-table td:last-child, .leaderboard-table th:last-child {
+  text-align: right;
+}
+
+#close-leaderboard {
+  font-size: 1.2rem;
+  padding: 0.7rem 2.5rem;
+  border-radius: 10px;
+  border: none;
+  background: #ffe066;
+  color: #222;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px #bfa940, 0 0 0 4px #222 inset;
+  letter-spacing: 1px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  outline: none;
+  display: inline-block;
+}
+
+#close-leaderboard:hover, #close-leaderboard:focus {
+  background: #fff5b8;
+  box-shadow: 0 2px #bfa940, 0 0 0 4px #222 inset;
+  transform: translateY(2px) scale(1.03);
+}

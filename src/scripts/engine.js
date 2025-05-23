@@ -1,3 +1,20 @@
+// Coloque seu firebaseConfig aqui
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCSuZnFGDJlhMm8jibd4Sg5P1I6JfmWP5Q",
+  authDomain: "detona-ralph-db59d.firebaseapp.com",
+  databaseURL: "https://detona-ralph-db59d-default-rtdb.firebaseio.com/",
+  projectId: "detona-ralph-db59d",
+  storageBucket: "detona-ralph-db59d.firebasestorage.app",
+  messagingSenderId: "173501837635",
+  appId: "1:173501837635:web:0900b17e25144223847ff6",
+  measurementId: "G-X7FJ04GFSB"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 const state = {
     view: {},
     values: {
@@ -23,6 +40,7 @@ function initView() {
         gameState: document.querySelector("#gameState"),
         startButton: document.querySelector("#start-restart-button"),
         totalScore: document.querySelector("#totalScore"),
+        leaderboard: document.querySelector("#leaderboard-overlay"),
     };
 }
 
@@ -82,7 +100,10 @@ function countDown(){
         setGameState("Gamer over!");
         state.view.squares.forEach(square => square.classList.remove("enemy"));
         state.view.totalScore.textContent = (`Your total score is: ${state.values.result}`);
-    }
+
+        // Verifica, salva e mostra o leaderboard após o jogo
+        checkAndSaveHighScore(state.values.result, showLeaderboard);
+    }   
 }
 
 function playSound(audioName){
@@ -184,6 +205,135 @@ function setGameState(message){
 
     state.view.gameState.textContent = message;
 }
+
+function saveScore(username, score) {
+    // Push a new score to the 'scores' list
+    db.ref('scores').push({
+        username: username,
+        score: score,
+        timestamp: Date.now()
+    });
+}
+
+function saveScoreWithLimit(username, score, callback) {
+    getTopScores(function(scores) {
+        scores.sort((a, b) => {
+            if (a.score !== b.score) return a.score - b.score;
+            return a.timestamp - b.timestamp;
+        });
+
+        if (scores.length < 10) {
+            db.ref('scores').push({
+                username,
+                score,
+                timestamp: Date.now()
+            }).then(() => {
+                if (callback) callback();
+            });
+        } else {
+            const lowest = scores[0];
+            if (score > lowest.score ||
+                (score === lowest.score && Date.now() > lowest.timestamp)) {
+                db.ref('scores')
+                  .orderByChild('score')
+                  .equalTo(lowest.score)
+                  .once('value', (snapshot) => {
+                      let toRemoveKey = null;
+                      let minTimestamp = Infinity;
+                      snapshot.forEach(child => {
+                          if (child.val().timestamp < minTimestamp) {
+                              minTimestamp = child.val().timestamp;
+                              toRemoveKey = child.key;
+                          }
+                      });
+                      if (toRemoveKey) {
+                          db.ref('scores/' + toRemoveKey).remove().then(() => {
+                              db.ref('scores').push({
+                                  username,
+                                  score,
+                                  timestamp: Date.now()
+                              }).then(() => {
+                                  if (callback) callback();
+                              });
+                          });
+                      } else {
+                          if (callback) callback();
+                      }
+                  });
+            } else {
+                if (callback) callback();
+            }
+        }
+    });
+}
+
+function getTopScores(callback) {
+    const dbRef = firebase.database().ref('scores');
+    dbRef.orderByChild('score').limitToLast(10).get().then((snapshot) => {
+        const scores = [];
+        snapshot.forEach((childSnapshot) => {
+            const scoreData = childSnapshot.val();
+            scores.push({
+                key: childSnapshot.key,
+                username: scoreData.username,
+                score: scoreData.score,
+                timestamp: scoreData.timestamp
+            });
+        });
+        // Ordena do maior para o menor, e mais antigo em caso de empate
+        scores.sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            return a.timestamp - b.timestamp;
+        });
+        callback(scores);
+    }).catch((error) => {
+        console.error("Erro ao buscar top scores:", error);
+        callback([]); // Retorna lista vazia em caso de erro
+    });
+}
+
+function checkAndSaveHighScore(finalScore, callback) {
+    getTopScores(function(scores) {
+        if (scores.length < 10 || finalScore > scores[scores.length - 1].score) {
+            const username = prompt("Congratulations! You made a high score! Enter your name:");
+            if (username && username.trim() !== "") {
+                saveScoreWithLimit(username.trim(), finalScore, callback);
+            } else if (callback) {
+                callback();
+            }
+        } else if (callback) {
+            callback();
+        }
+    });
+}
+
+function showLeaderboard() {
+    getTopScores(function(scores) {
+        const overlay = document.getElementById('leaderboard-overlay');
+        const table = document.getElementById('leaderboard-list');
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+        scores.forEach((entry, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${idx + 1}</td>
+                <td>${entry.username || 'Anonymous'}</td>
+                <td style="text-align:right;">${entry.score}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+        overlay.style.display = 'flex';
+    });
+}
+
+// Fechar overlay ao clicar no botão
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('leaderboard-overlay');
+    const closeBtn = document.getElementById('close-leaderboard');
+    if (closeBtn) {
+        closeBtn.onclick = () => { overlay.style.display = 'none'; };
+    }
+});
 
 function main(){
     initView();

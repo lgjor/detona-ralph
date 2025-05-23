@@ -23,6 +23,24 @@ Este projeto foi desenvolvido como parte do desafio da trilha Front End da DIO. 
 - **Exibição do score final**: ao terminar o tempo, o placar final é mostrado no rodapé
 - **Efeitos retrô no botão**: efeito visual de hover e clique no botão Start/Restart
 
+## Novidade: Leaderboard Online!
+
+Agora o jogo conta com um **Leaderboard** (ranking online) integrado ao Firebase Realtime Database.  
+Ao final de cada partida, se sua pontuação estiver entre as 10 melhores, você poderá digitar seu nome e entrar para o ranking!
+
+### Como funciona o Leaderboard
+
+- **Top 10:** Apenas os 10 melhores scores ficam salvos no banco.
+- **Empate:** Em caso de empate de pontos, o score mais antigo permanece.
+- **Tela de Ranking:** Após o fim do jogo, o ranking aparece automaticamente sobre o jogo, mostrando posição, nome e pontuação de cada jogador.
+- **Botão Close:** Clique em "Close" para voltar ao jogo.
+
+### Como usar
+
+1. Jogue normalmente.
+2. Ao terminar, se sua pontuação for suficiente, digite seu nome no pop-up.
+3. Veja seu nome no ranking!
+
 ## 🛠️ Tecnologias Utilizadas
 
 - HTML5
