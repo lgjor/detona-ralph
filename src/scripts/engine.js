@@ -66,7 +66,7 @@ function countDown(){
 }
 
 function playSound(audioName){
-    let audio = new Audio(`https://github.com/lgjor/detona-ralph/raw/refs/heads/main/src/audios/${audioName}.m4a?raw=true`);
+    new Audio(`https://raw.githubusercontent.com/lgjor/detona-ralph/main/src/audios/${audioName}.m4a`);
     if (audioName === "Jump20"){
         audio.volume = 0.01;
     } else {
@@ -147,6 +147,7 @@ function startGame() {
     state.values.result = 0;
     state.values.currentTime = 60;
     state.view.totalScore.textContent = "";
+    state.view.level.textContent = 1; // Reseta o nível
     state.view.score.textContent = state.values.result;
     state.view.timeLeft.textContent = state.values.currentTime;
     setGameState("Are you ready?");
