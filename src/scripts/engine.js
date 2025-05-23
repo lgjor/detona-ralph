@@ -2,13 +2,13 @@
 
 const firebaseConfig = {
   apiKey: $APIKEY,
-  authDomain: "detona-ralph-db59d.firebaseapp.com",
-  databaseURL: "https://detona-ralph-db59d-default-rtdb.firebaseio.com/",
-  projectId: "detona-ralph-db59d",
-  storageBucket: "detona-ralph-db59d.firebasestorage.app",
-  messagingSenderId: "173501837635",
-  appId: "1:173501837635:web:0900b17e25144223847ff6",
-  measurementId: "G-X7FJ04GFSB"
+  authDomain: $authDomain,
+  databaseURL: $databaseURL,
+  projectId: $projectId,
+  storageBucket: $storageBucket,
+  messagingSenderId: $messagingSenderId,
+  appId: $appid,
+  measurementId: $measurementId
 };
 
 // Initialize Firebase
