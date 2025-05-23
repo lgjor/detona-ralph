@@ -66,7 +66,7 @@ function countDown(){
 }
 
 function playSound(audioName){
-    let audio = new Audio(`../src/audios/${audioName}.m4a?raw=true`);
+    let audio = new Audio(`https://github.com/lgjor/detona-ralph/raw/refs/heads/main/src/audios/${audioName}.m4a?raw=true`);
     if (audioName === "Jump20"){
         audio.volume = 0.01;
     } else {
