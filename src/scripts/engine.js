@@ -1,5 +1,20 @@
 const state = {
-    view:{
+    view: {},
+    values: {
+        timerId: null,
+        gameSpeed: 1000,
+        hitPosition: 0,
+        result: 0,
+        currentTime: 60,
+        gameLevel: 1,
+    },
+    actions: {
+        countDownTimerId: null,
+    },
+};
+
+function initView() {
+    state.view = {
         squares: document.querySelectorAll(".square"),
         enemy: document.querySelectorAll(".enemy"),
         timeLeft: document.querySelector("#time-left"),
@@ -8,19 +23,8 @@ const state = {
         gameState: document.querySelector("#gameState"),
         startButton: document.querySelector("#start-restart-button"),
         totalScore: document.querySelector("#totalScore"),
-    },
-    values:{
-        timerId: null,
-        gameSpeed: 1000,
-        hitPosition: 0,
-        result: 0,
-        currentTime: 60,
-        gameLevel: 1, // Novo: nível do jogo
-    },
-    actions:{
-        countDownTimerId: null,
-    },
-};
+    };
+}
 
 function calculateSpeedByLevel(level) {
     const speeds = [1000, 900, 800, 700, 600, 500, 450, 400, 350, 300];
@@ -34,6 +38,22 @@ function updateGameLevel(newLevel) {
     playSound("levelUp");
     let newSpeed = calculateSpeedByLevel(newLevel);
     updateGameSpeed(newSpeed);
+    
+    // Fun and motivational messages per level (English)
+    const messages = [
+        "Too easy, right? 😎", // Level 1
+        "Still a walk in the park!", // Level 2
+        "Now it's heating up...", // Level 3
+        "Feeling the pressure?", // Level 4
+        "Let's speed things up!", // Level 5
+        "It's getting fast!", // Level 6
+        "Only the strong make it here!", // Level 7
+        "Sweating yet?", // Level 8
+        "Now or never!", // Level 9
+        "Turbo mode! Show who's boss! 🚀", // Level 10
+    ];
+
+    setGameState(messages[Math.min(newLevel - 1, messages.length - 1)]);
 }
 
 function updateGameSpeed(newSpeed) {
@@ -43,6 +63,7 @@ function updateGameSpeed(newSpeed) {
 }
 
 function countDown(){
+    //console.log("countDown called", state.values.currentTime);
     state.values.currentTime--;
     state.view.timeLeft.textContent = state.values.currentTime;
 
@@ -61,18 +82,19 @@ function countDown(){
         setGameState("Gamer over!");
         state.view.squares.forEach(square => square.classList.remove("enemy"));
         state.view.totalScore.textContent = (`Your total score is: ${state.values.result}`);
-        //alert("Game Over! Your final score is " + state.values.result);
     }
 }
 
 function playSound(audioName){
-    new Audio(`https://raw.githubusercontent.com/lgjor/detona-ralph/main/src/audios/${audioName}.m4a`);
+    const audio = new Audio(`https://raw.githubusercontent.com/lgjor/detona-ralph/main/src/audios/${audioName}.m4a`);
     if (audioName === "Jump20"){
         audio.volume = 0.01;
     } else {
         audio.volume = 0.1;
     }
-    audio.play();
+    audio.play().catch((error) => {
+        console.error(`Failed to play sound ${audioName}:`, error);
+    });
 }
 
 function randomSquare(){
@@ -129,7 +151,8 @@ function startGame() {
     moveEnemy();
     addListenerHitBox();
 
-    // Inicia o timer do tempo corretamente
+    // Defensive: clear again before starting, just in case
+    clearInterval(state.actions.countDownTimerId);
     state.actions.countDownTimerId = setInterval(countDown, 1000);
 
      // Troca o listener do botão
@@ -158,10 +181,12 @@ function startGame() {
 }
 
 function setGameState(message){
+
     state.view.gameState.textContent = message;
 }
 
 function main(){
+    initView();
     state.view.totalScore.textContent = "";
     state.view.startButton.addEventListener("click", startGame);
 }
