@@ -1,6 +1,8 @@
 # Detona Ralph - Jogo Interativo
 
-Projeto do Bootcamp Front End DIO
+Projeto criado durante o Bootcamp Front End DIO, aprimoramentos feitos por meio de um ranking dos 10 melhores jogadores, deixe a sua marca.
+
+Veja se consegue bater o meu record: https://lgjor.github.io/detona-ralph/
 
 ## 🎮 Sobre o Projeto
 
